@@ -9,7 +9,7 @@ RUN /usr/local/bin/docker-php-ext-configure gd --with-freetype-dir=/usr/lib/x86_
 RUN /usr/local/bin/docker-php-ext-install gd soap pdo_mysql bcmath intl xsl zip sockets
 RUN echo 'memory_limit=1G' >> /usr/local/etc/php/php.ini
 
-RUN apt-get -y install git less nano
+RUN apt-get -y install git less nano telnet iputils-ping
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php -r "if (hash_file('sha384', 'composer-setup.php') === 'c5b9b6d368201a9db6f74e2611495f369991b72d9c8cbd3ffbc63edff210eb73d46ffbfce88669ad33695ef77dc76976') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 RUN php composer-setup.php
