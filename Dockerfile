@@ -10,7 +10,7 @@ RUN /usr/local/bin/docker-php-ext-configure gd --with-freetype-dir=/usr/lib/x86_
 RUN /usr/local/bin/docker-php-ext-install gd soap pdo_mysql bcmath intl xsl zip sockets
 RUN echo 'memory_limit=1G' >> /usr/local/etc/php/php.ini
 
-RUN apt-get -y install git less nano telnet iputils-ping gnupg wget
+RUN apt-get -y install git less nano telnet iputils-ping gnupg wget iptables
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
