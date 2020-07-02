@@ -11,6 +11,13 @@ RUN /usr/local/bin/docker-php-ext-install gd soap pdo_mysql bcmath intl xsl zip 
 RUN echo 'memory_limit=1G' >> /usr/local/etc/php/php.ini
 
 RUN apt-get -y install git less nano telnet iputils-ping gnupg wget iptables sudo
+# Debian 10 (Buster) uses nftables instead of iptables, however iptables is still provided
+# see https://wiki.debian.org/iptables for details
+RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+# The following two give error about not being registered:
+#RUN update-alternatives --set arptables /usr/sbin/arptables-legacy
+#RUN update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
