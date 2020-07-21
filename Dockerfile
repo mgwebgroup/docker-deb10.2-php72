@@ -10,7 +10,7 @@ RUN /usr/local/bin/docker-php-ext-configure gd --with-freetype-dir=/usr/lib/x86_
 RUN /usr/local/bin/docker-php-ext-install gd soap pdo_mysql bcmath intl xsl zip sockets
 RUN echo 'memory_limit=1G' >> /usr/local/etc/php/php.ini
 
-RUN apt-get -y install git less nano telnet iputils-ping gnupg wget iptables sudo
+RUN apt-get -y install git less nano telnet iputils-ping gnupg wget iptables sudo rclone
 # Debian 10 (Buster) uses nftables instead of iptables, however iptables is still provided
 # see https://wiki.debian.org/iptables for details
 RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
