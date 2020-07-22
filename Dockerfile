@@ -19,9 +19,10 @@ RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 #RUN update-alternatives --set arptables /usr/sbin/arptables-legacy
 #RUN update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 
+RUN apt-get -y remove cmdtest yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get -y install yarn
+RUN apt-get update && apt-get -y install yarn
 
 COPY composer-install.sh /opt/
 RUN /opt/composer-install.sh
