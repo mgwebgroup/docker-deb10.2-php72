@@ -20,7 +20,8 @@ RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 #RUN update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 
 # install dockerize, allows to pause between each container start in docker-compose
-RUN DOCKERIZE_VERSION=v0.6.1 wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
