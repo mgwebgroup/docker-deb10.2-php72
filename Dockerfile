@@ -25,10 +25,15 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN apt-get -y remove cmdtest yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get -y install yarn
+RUN wget https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz; tar -C /usr/local -xJvf node-v12.18.4-linux-x64.tar.xz; \
+    update-alternatives --install /usr/bin/node nodejs /usr/local/node-v12.18.4-linux-x64/bin/node 10 && \
+    update-alternatives --install /usr/bin/npm npm /usr/local/node-v12.18.4-linux-x64/bin/npm 10 && \
+    update-alternatives --install /usr/bin/npx npx /usr/local/node-v12.18.4-linux-x64/bin/npx 10
+
+#RUN apt-get -y remove cmdtest yarn
+#RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+#RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+#RUN apt-get update && apt-get -y install yarn
 
 COPY composer-install.sh /opt/
 RUN /opt/composer-install.sh
