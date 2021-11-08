@@ -1,13 +1,17 @@
 FROM phpstorm/php-72-apache-xdebug-27
 
-
-RUN apt-get update
+RUN chmod go+w /tmp && apt-get clean && apt-get update --allow-releaseinfo-change
 RUN apt-get -y autoremove
-RUN apt-get -y install libpng-dev libxml2-dev libxslt1-dev libfreetype6-dev libtidy-dev
+RUN apt-get -y install libpng-dev libxml2-dev libxslt1-dev libfreetype6-dev libtidy-dev memcached libmemcached-dev
+
 # docker scripts which install php extensions are in /usr/local/bin
 # php extensions are compiled from source files stored in /usr/src/php
 RUN /usr/local/bin/docker-php-ext-configure gd --with-freetype-dir=/usr/lib/x86_64-linux-gnu
 RUN /usr/local/bin/docker-php-ext-install gd soap pdo_mysql bcmath intl xsl zip sockets tidy
+RUN pecl channel-update pecl.php.net && pecl install mailparse-3.1.2 && \
+pecl config-set php_ini /usr/local/etc/php/php.ini && \
+/usr/local/bin/docker-php-ext-enable mailparse.so
+RUN pecl install memcached-3.1.5 && /usr/local/bin/docker-php-ext-enable memcached.so
 RUN echo 'memory_limit=1G' >> /usr/local/etc/php/php.ini
 
 RUN apt-get -y install git less nano telnet iputils-ping gnupg wget iptables sudo rclone unzip
